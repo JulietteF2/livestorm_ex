@@ -4,6 +4,7 @@ require_relative 'directions/pick_room'
 require_relative 'directions/back_to_main'
 require_relative 'rooms/living_room'
 require_relative 'rooms/open_space'
+require_relative 'actions/exchange_snack'
 
 # Keep track of where the player is
 KEEP_TRACK = []
@@ -28,6 +29,8 @@ def launch_game
       living_room(input)
     when 'openspace'
       open_space(input)
+    when 'snack'
+      exchange_snack(input)
     end
   end
 
