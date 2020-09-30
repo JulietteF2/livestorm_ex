@@ -181,3 +181,29 @@ describe "# boss_room" do
     expect { boss_room('mlep') }.not_to raise_error
   end
 end
+
+describe "# win_or_lose" do
+  it "should end the game on losing if user picks 'hang out for a bit'" do
+    expect { win_or_lose('hang out for a bit') }.to output("\nHOW DARE YOU?\nSorry my dear but this is high treason. No one is allowed to 'hang out' with our competitors!\nYou lost.\n").to_stdout
+  end
+  it "should return false on 'hang out...' input" do
+    expect(win_or_lose('hang out for a bit')).to eq(false)
+  end
+
+  it "should end the game on winning if user picks 'release the fantoms'" do
+    expect { win_or_lose('release the fantoms') }.to output("\nOMG Blinky, Inky and Pinky are eating the power cables, all the servers are shutting down and thus....\nDestroying our competitor yaaaaaay!\nYou won, well done :)\n").to_stdout
+  end
+  it "should return false on 'release the fantoms' input" do
+    expect(win_or_lose('hang out for a bit')).to eq(false)
+  end
+
+  it "should wait for new input if a random one is passed" do
+    expect { win_or_lose('mlep') }.to output("Sorry, your answer is not valid, please try again\n").to_stdout
+  end
+  it "shouldn't break if a random input is passed" do
+    expect { win_or_lose('mlep') }.not_to raise_error
+  end
+  it "should return true to random input" do
+    expect(win_or_lose('mlep')).to eq(true)
+  end
+end
