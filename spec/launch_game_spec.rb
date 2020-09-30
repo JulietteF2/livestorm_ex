@@ -160,3 +160,24 @@ describe "# exchange_snack" do
     expect { exchange_snack('mlep') }.not_to raise_error
   end
 end
+
+describe "# boss_room" do
+  it "should call user chicken if 'no' is picked" do
+    expect { boss_room('no') }.to output(/.+chickening.+/).to_stdout
+  end
+  it "should go back if 'no'" do
+    expect(KEEP_TRACK.last).to eq('hall')
+  end
+
+  it "should redirect to win_lose if 'yes'" do
+    expect { boss_room('yes') }.to output.to_stdout
+    expect(KEEP_TRACK.last).to eq('winlose')
+  end
+
+  it "should wait for new input if a random one is passed" do
+    expect { boss_room('mlep') }.to output("Sorry, your answer is not valid, please try again\n").to_stdout
+  end
+  it "shouldn't break if a random input is passed" do
+    expect { boss_room('mlep') }.not_to raise_error
+  end
+end
