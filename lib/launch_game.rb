@@ -2,6 +2,7 @@ require 'readline'
 require_relative 'directions/first_step'
 require_relative 'directions/pick_room'
 require_relative 'directions/back_to_main'
+require_relative 'rooms/living_room'
 
 # Keep track of where the player is
 KEEP_TRACK = []
