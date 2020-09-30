@@ -22,6 +22,8 @@ def launch_game
       first_step(input) ? '' : break
     when 'hall'
       pick_room(input)
+    when 'livingroom'
+      living_room(input)
     end
   end
 
