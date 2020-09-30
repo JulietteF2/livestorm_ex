@@ -130,3 +130,80 @@ describe "# open_space" do
     expect { open_space('mlep') }.not_to raise_error
   end
 end
+
+describe "# exchange_snack" do
+  it "should not thank user if 'no' is picked" do
+    expect { exchange_snack('no') }.to output(/.+not very nice.+/).to_stdout
+  end
+  it "should not add 'inky' and 'pinky' to ARTEFACTS if user picks 'no'" do
+    expect(ARTEFACTS[-2..-1]).not_to eq(['inky', 'pinky'])
+  end
+  it "should update KEEP_TRACK to hall when 'no'" do
+    expect(KEEP_TRACK.last).to eq('hall')
+  end
+
+  it "should thank user for snack if 'yes' is picked" do
+    expect { exchange_snack('yes') }.to output(/.+Tom is happy!.+/).to_stdout
+  end
+  it "should add 'inky' and 'pinky' to ARTEFACTS if user picks 'yes'" do
+    expect(ARTEFACTS[-2..-1]).to eq(['inky', 'pinky'])
+  end
+
+  it "should update KEEP_TRACK to hall when 'yes'" do
+    expect(KEEP_TRACK.last).to eq('hall')
+  end
+
+  it "should wait for new input if a random one is passed" do
+    expect { exchange_snack('mlep') }.to output("Sorry, your answer is not valid, please try again\n").to_stdout
+  end
+  it "shouldn't break if a random input is passed" do
+    expect { exchange_snack('mlep') }.not_to raise_error
+  end
+end
+
+describe "# boss_room" do
+  it "should call user chicken if 'no' is picked" do
+    expect { boss_room('no') }.to output(/.+chickening.+/).to_stdout
+  end
+  it "should go back if 'no'" do
+    expect(KEEP_TRACK.last).to eq('hall')
+  end
+
+  it "should redirect to win_lose if 'yes'" do
+    expect { boss_room('yes') }.to output.to_stdout
+    expect(KEEP_TRACK.last).to eq('winlose')
+  end
+
+  it "should wait for new input if a random one is passed" do
+    expect { boss_room('mlep') }.to output("Sorry, your answer is not valid, please try again\n").to_stdout
+  end
+  it "shouldn't break if a random input is passed" do
+    expect { boss_room('mlep') }.not_to raise_error
+  end
+end
+
+describe "# win_or_lose" do
+  it "should end the game on losing if user picks 'hang out for a bit'" do
+    expect { win_or_lose('hang out for a bit') }.to output("\nHOW DARE YOU?\nSorry my dear but this is high treason. No one is allowed to 'hang out' with our competitors!\nYou lost.\n").to_stdout
+  end
+  it "should return false on 'hang out...' input" do
+    expect(win_or_lose('hang out for a bit')).to eq(false)
+  end
+
+  it "should end the game on winning if user picks 'release the fantoms'" do
+    expect { win_or_lose('release the fantoms') }.to output("\nOMG Blinky, Inky and Pinky are eating the power cables, all the servers are shutting down and thus....\nDestroying our competitor yaaaaaay!\nYou won, well done :)\n").to_stdout
+  end
+  it "should return false on 'release the fantoms' input" do
+    expect(win_or_lose('hang out for a bit')).to eq(false)
+  end
+
+  it "should wait for new input if a random one is passed" do
+    expect { win_or_lose('mlep') }.to output("Sorry, your answer is not valid, please try again\n").to_stdout
+  end
+  it "shouldn't break if a random input is passed" do
+    expect { win_or_lose('mlep') }.not_to raise_error
+  end
+  it "should return true to random input" do
+    expect(win_or_lose('mlep')).to eq(true)
+  end
+end
