@@ -2,6 +2,8 @@ require 'readline'
 require_relative 'directions/first_step'
 require_relative 'directions/pick_room'
 require_relative 'directions/back_to_main'
+require_relative 'rooms/living_room'
+require_relative 'rooms/open_space'
 
 # Keep track of where the player is
 KEEP_TRACK = []
@@ -22,6 +24,10 @@ def launch_game
       first_step(input) ? '' : break
     when 'hall'
       pick_room(input)
+    when 'livingroom'
+      living_room(input)
+    when 'openspace'
+      open_space(input)
     end
   end
 
