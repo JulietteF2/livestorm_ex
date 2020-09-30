@@ -1,5 +1,7 @@
 require 'readline'
 require_relative 'directions/first_step'
+require_relative 'directions/pick_room'
+require_relative 'directions/back_to_main'
 
 # Keep track of where the player is
 KEEP_TRACK = []
@@ -18,6 +20,8 @@ def launch_game
     case KEEP_TRACK.last
     when nil
       first_step(input) ? '' : break
+    when 'hall'
+      pick_room(input)
     end
   end
 
