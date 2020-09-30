@@ -130,3 +130,33 @@ describe "# open_space" do
     expect { open_space('mlep') }.not_to raise_error
   end
 end
+
+describe "# exchange_snack" do
+  it "should not thank user if 'no' is picked" do
+    expect { exchange_snack('no') }.to output(/.+not very nice.+/).to_stdout
+  end
+  it "should not add 'inky' and 'pinky' to ARTEFACTS if user picks 'no'" do
+    expect(ARTEFACTS[-2..-1]).not_to eq(['inky', 'pinky'])
+  end
+  it "should update KEEP_TRACK to hall when 'no'" do
+    expect(KEEP_TRACK.last).to eq('hall')
+  end
+
+  it "should thank user for snack if 'yes' is picked" do
+    expect { exchange_snack('yes') }.to output(/.+Tom is happy!.+/).to_stdout
+  end
+  it "should add 'inky' and 'pinky' to ARTEFACTS if user picks 'yes'" do
+    expect(ARTEFACTS[-2..-1]).to eq(['inky', 'pinky'])
+  end
+
+  it "should update KEEP_TRACK to hall when 'yes'" do
+    expect(KEEP_TRACK.last).to eq('hall')
+  end
+
+  it "should wait for new input if a random one is passed" do
+    expect { exchange_snack('mlep') }.to output("Sorry, your answer is not valid, please try again\n").to_stdout
+  end
+  it "shouldn't break if a random input is passed" do
+    expect { exchange_snack('mlep') }.not_to raise_error
+  end
+end
